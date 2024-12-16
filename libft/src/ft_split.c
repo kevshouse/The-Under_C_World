@@ -35,95 +35,78 @@ RETURN VALUES
 AUTHORIZED EXTERNAL FUNCTIONS
     malloc(3)
 	*/
-
+//char **ft_split(const char *s, char c); //We split on 'c'.
 //ft_split.c
 #include "libft.h"
+#include <stdlib.h>
 
-char **ft_split(const char *s, char c); //We split on 'c'.
-
-char **ft_split(const char *s, char c)
-{
-	size_t	token_count; //to keep track of the number of individual words.
-	size_t	token_index; //to keep track of the number of chars in a token.
-	int		token_entry;
-	int		s_index;
-	void*	safe_malloc(size_t size)
-	{
-		if (ptr == NULL)
-		{
-			//return (-1);
-			exit(EXIT_FAILURE); // more standard & portable than return (-1).
-		}
-		return ptr;
-	}
-	//Count the tokens function count_token()
-	static size_t	count_tokens(const char *s, char c)
-	{
-		int		count;
-		int		inside_tok;in
-		
-		count = 0;
-		inside_tok = 0;
-		
-		while (*s)
-		{
-			if (*s != c &&!inside_tok)
-			{
-				inside_tok = 1;
-				count++;
-			}
-			else if (*s == c)
-			{
-				inside_tok = 0;
-			}
-			s++;
-		}
-		return (count);
-	}
-	//Get_next_token function()
-	static char *get_next_token(const char **s, char c)
-	{
-		const char *start = *s;
-		while (**s && **s == c)
-			(*s)++;
-		return (ft_strndup(start, *s - start))
-	}
-
-char **ft_split(const char *s, char c)
-{
-	int		i;
-	int		j;
-	size_t	token_count;
-	
-	if (!s)
-		return (NULL);
-
-	char **buffer = safe_malloc((count_tokens + 1) * sizeof(char *));
-	if (!buffer)
-		return (NULL);
-	while (*s)
-	{
-		if (*s != c)
-		{
-			buffer[i] = get_next_token)&s, c);
-			if (!buffer[i])
-			{
-				while (j < i)
-				{
-					free(buffer[j]);
-					j++;
-				}
-			}
-			free(buffer);
-			return (NULL);
-			
-		}
-		i++;
-	}
-	else
-	{
-		s++;
-	}
+static void *safe_malloc(size_t size) {
+    void *ptr = malloc(size);
+    if (ptr == NULL) {
+        exit(EXIT_FAILURE); // Exit if memory allocation fails
+    }
+    return ptr;
 }
-buffer[i] = NULL;
-return (buffer);
+
+static size_t count_tokens(const char *s, char c) {
+    size_t count = 0;
+    int inside_tok = 0;
+
+    while (*s) {
+        if (*s != c && !inside_tok) {
+            inside_tok = 1;
+            count++;
+        } else if (*s == c) {
+            inside_tok = 0;
+        }
+        s++;
+    }
+    return count;
+}
+
+static char *get_next_token(const char **s, char c) {
+    const char *start = *s;
+    while (**s && **s == c) {
+        (*s)++;
+    }
+    start = *s; // Start of the token
+    while (**s && **s != c) {
+        (*s)++;
+    }
+    return ft_strndup(start, *s - start); // Duplicate the token
+}
+
+char **ft_split(const char *s, char c) {
+    size_t token_count;
+    size_t i = 0;
+    char **buffer;
+
+    if (!s) {
+        return NULL;
+    }
+
+    token_count = count_tokens(s, c);
+    buffer = safe_malloc((token_count + 1) * sizeof(char *));
+    if (!buffer) {
+        return NULL; // This should not happen due to safe_malloc
+    }
+
+    while (*s) {
+        if (*s != c) {
+            buffer[i] = get_next_token(&s, c);
+            if (!buffer[i]) {
+                // Free previously allocated tokens
+                for (size_t j = 0; j < i; j++) {
+                    free(buffer[j]);
+                }
+                free(buffer);
+                return NULL;
+            }
+            i++;
+        } else {
+            s++;
+        }
+    }
+    buffer[i] = NULL; // Null-terminate the array
+    return buffer;
+}
