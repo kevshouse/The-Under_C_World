@@ -1,44 +1,75 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: keanders <keanders@student.42london.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 11:34:19 by keanders          #+#    #+#             */
-/*   Updated: 2024/12/10 12:18:15 by keanders         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+/***************************************************************/
+/* Allocates (with malloc(3)) and returns a substring from     */
+/* string 's'.                                                 */
+/* Returns Null if allocation fails or the substring if        */
+/* allocation succeeds.                                        */
+/***************************************************************/
 
+//Todo :-
+// calculate amout to malloc
+// malloc Fails
+// (Return NULL)
+//  if maloc succeeds
+// (Return substring)
+
+//Todo (improved)
+/*
+
+    If the input string s is NULL, return NULL.
+    If start is greater than the length of s, 
+    (return an empty string (or NULL based on your design choice).
+    If len is greater than the remaining length of the string from start, adjust len accordingly.
+
+
+
+Calculate Memory to Allocate:
+
+    Determine the length of the substring to allocate memory for. This will be len + 1 to account for the null terminator.
+
+Allocate Memory:
+
+    Use malloc to allocate the required memory.
+    If malloc fails, return NULL.
+
+Copy the Substring:
+
+    Use a loop or ft_strncpy to copy the substring from s starting at start for len characters.
+
+Null-Terminate the Substring:
+
+    Ensure the new string is null-terminated.
+
+Return the Substring:
+
+    Return the pointer to the newly allocated substring.
+
+
+*/
 #include "libft.h"
-#include <stdlib.h> // for malloc and calloc
-#include <string.h> // for strlen and strncpy
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char *ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t	s_len;
-	size_t	actual_len;
 	char	*substr;
-
-	s_len = ft_strlen(s);
-	if (!s || start >= ft_strlen(s))
-	{
-		return ((char *)ft_calloc(1, sizeof(char)));
-	}
-	if (s_len - start < len)
-	{
-		actual_len = s_len - start;
-	}
-	else
-	{
-		actual_len = len;
-	}
-	substr = (char *)malloc(actual_len + 1);
-	if (!substr)
-	{
+	size_t		s_len;
+	size_t		i;
+	
+	i = 0;
+	if (!s)
 		return (NULL);
+	s_len = ft_strlen(s);
+	if (start >= s_len)
+		return (ft_strdup(""));
+	if (len > s_len - start)
+		len = s_len - start;
+	substr = (char *) malloc(len +1);
+	if (!substr)
+		return NULL; // Allocation faled!
+	while (i < len)
+	{	
+		substr[i] = s[start +i];
+		i++;
 	}
-	ft_strncpy(substr, s + start, actual_len);
-	substr[actual_len] = '\0';
+	//Null-terminate
+	substr[len] = '\0';
 	return (substr);
 }
