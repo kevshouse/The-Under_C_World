@@ -15,19 +15,34 @@
  * new->next = NULL
  */
 /* return the new element */
+/*
+ * Creates a new node for a linked list.
+ * @param content: The content to be stored in the new node.
+ * @return: A pointer to the new node, or NULL if memory allocation fails.
+ */
 
 #include "libft.h"
+
+static void *safe_malloc(size_t size)
+{
+	void *ptr = malloc(size);
+	if (ptr == NULL) 
+		return(NULL);
+	return ptr;
+}
 
 t_list	*ft_lstnew(void	*content)
 {
 	t_list *node;
 	// allocate mem
-	node = malloc(sizeof(t_list));
+	node = safe_malloc(sizeof(t_list));
 	// handle malloc failure
 	if (!node)
 		return (NULL);
-	node->content = content;//Insert the data.
-	node->next = NULL;// This a new list, so no next node.
+	/* Insert the data. */
+	node->content = content;
+	/* This a new list, so no next node.*/
+	node->next = NULL;
 	
 	return (node);
 }

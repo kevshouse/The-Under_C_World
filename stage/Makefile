@@ -1,12 +1,13 @@
 # **************************************************************************** #
-#                                Makefile                              	       #
+#                                Makefile                                   #
 # **************************************************************************** #
 
 # Compiler and flags
 CC      := gcc
 CFLAGS  := -Wall -Wextra -Werror
 
-NAME	=	libft.a
+# Library name
+NAME    = libft.a
 
 # Files and directories
 SRC     := ft_isalpha.c \
@@ -26,6 +27,7 @@ SRC     := ft_isalpha.c \
            ft_strchr.c \
            ft_strrchr.c \
            ft_strncmp.c \
+           ft_memchr.c \
            ft_memcmp.c \
            ft_strnstr.c \
            ft_atoi.c \
@@ -54,15 +56,14 @@ BONUS   := ft_lstnew.c \
            ft_lstmap.c \
 
 OBJ     := $(SRC:.c=.o) $(BONUS:.c=.o)
-NAME    := program
 HEADER  := libft.h
 
 # Default rule
 all: $(NAME)
 
-# Linking the final executable
+# Creating the static library
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	ar rcs $(NAME) $(OBJ)
 
 # Compiling object files
 %.o: %.c $(HEADER)
@@ -72,12 +73,16 @@ $(NAME): $(OBJ)
 clean:
 	rm -f $(OBJ)
 
-# Clean object files and the executable
+# Clean object files and the library
 fclean: clean
 	rm -f $(NAME)
 
 # Rebuild everything
 re: fclean all
 
+# Bonus target
+bonus: $(OBJ) $(BONUS:.c=.o)
+	ar rcs $(NAME) $(OBJ) $(BONUS:.c=.o)
+
 # Phony targets
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus

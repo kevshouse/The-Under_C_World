@@ -4,7 +4,8 @@ static void *safe_malloc(size_t size)
 	void *ptr = malloc(size);
 	if (ptr == NULL) 
 		{
-			exit(EXIT_FAILURE); // Exit if memory allocation fails
+			return (NULL);
+			//exit(EXIT_FAILURE); // Exit if memory allocation fails
 		}
 	return (ptr);
 }

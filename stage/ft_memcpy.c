@@ -20,7 +20,7 @@
 #include "libft.h"
 
 void    *ft_memcpy(void *dst, const void *src, size_t n)
-				
+/*				
 {
 	unsigned char	*tmp_src;
 	unsigned char	*tmp_dst;
@@ -39,4 +39,18 @@ void    *ft_memcpy(void *dst, const void *src, size_t n)
 		i++;	
 	}
 	return dst;
+}
+*/
+{
+	unsigned char *d = dst;
+	const unsigned char *s = src;
+	
+	if (!dst && !src)
+	/* NULL Pointer precaution */
+		return (NULL);
+	while (n--)
+	{
+		*d++ = *s++;
+	}
+	return (dst);
 }

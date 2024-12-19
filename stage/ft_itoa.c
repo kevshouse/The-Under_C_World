@@ -1,59 +1,63 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Oceano <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/20 10:04:58 by Oceano            #+#    #+#             */
+/*   Updated: 2023/01/30 19:35:09 by Oceano           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/*
+ *
+ * Allocates with malloc(3) and returns a string
+ * representing the integer received as an argument.
+ * Negative numbers must be handled.
+ *
+*/
+
+//#include <stdint.h>
+//#include <stdio.h>
 #include "libft.h"
 
-static void *safe_malloc(size_t size)
+static int	ft_len(int n)
 {
-	void *ptr = malloc(size);
-	if (ptr == NULL) 
-		{
-			return(NULL);
-		}
-    return ptr;
-}
-/*Compute the length of the number*/
-static int get_length(int n)
-{
-	int length;
-	
-	length = 0;			
+	size_t	count;
+
+	count = 0;
 	if (n <= 0)
-		length = 1;
-	else
-		length = 0;
-	while (n != 0)
+		++count;
+	while (n)
 	{
+		++count;
 		n /= 10;
-		length++;
 	}
-	return (length);
+	return (count);
 }
 
-char *ft_itoa(int n)
+char	*ft_itoa(int n)
 {
+	char	*ptr;
 	int		len;
-	
-	
-	len = get_length(n);
-	char *str = (char *)safe_malloc(len + 1);
-	/*Possibly redundant with safe_malloc()!*/
-	if (!str)
+
+	len = ft_len(n);
+	ptr = malloc(len + 1);
+	if (NULL == ptr)
 		return (NULL);
-	/*NULL term string */
-	str[len] = '\0';
-	if (n == 0)
-	{	/* Zero handler */
-		str[0] = '0';
-		return (str);
-	}	
-	if (n < 0)
-	{	/* Negative handler */
-		str[0] = '-';
-		n = -n;
-	}
-	while (n > 0)
-	{/*	digit to char conversion */
-		str[--len] = (n % 10) + '0';
-		/* strip last digit */
+	ptr[len] = '\0';
+	if (0 == n)
+		ptr[0] = '0';
+	else if (n < 0)
+		ptr[0] = '-';
+	while (n)
+	{	
+		if (n < 0)
+			ptr[--len] = (~(n % 10) + 1) + 48;
+		else
+			ptr[--len] = (n % 10) + 48;
 		n /= 10;
-	}
-	return (str);
+	}	
+	return (ptr);
 }
