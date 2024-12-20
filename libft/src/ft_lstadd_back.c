@@ -1,4 +1,4 @@
-#include "ftlib.h"
+#include "libft.h"
 
 void ft_lstadd_back(t_list **lst, t_list *new)
 {	
@@ -7,9 +7,8 @@ void ft_lstadd_back(t_list **lst, t_list *new)
 	if (!new)// Do nothing on NULL nodes
 		return;
 	if (*lst ==NULL)
-	{// On empty set new head node as head
-		*lst = new
-	}
+		// On empty set new head node as head
+		*lst = new;
 	else
 	{// Start at head node
 		existing = *lst;

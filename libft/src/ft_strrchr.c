@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                        :+:      :+:    :+:  */
+/*   ft_strrchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: keanders <keanders@student.42london.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -16,16 +16,16 @@ char	*ft_strrchr(const char *s, int c)
 {
 	int		len_str;
 	int		place;
-
+	
 	len_str = ft_strlen(s);
-	place = len_str;
+	place = len_str; // end of string
 	while (place >= 0)
 	{
-		if (s[place] == (unsigned char)c)
+		if (s[place] == (unsigned char)c) //compare
 		{
-			return ((char *)&s[place]);
+			return ((char *)&s[place]);// return the address of found char.			
 		}
 		place--;
 	}
-	return (NULL);
+	return (NULL); // NULL, if not found.
 }

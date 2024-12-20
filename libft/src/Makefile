@@ -1,33 +1,69 @@
 # **************************************************************************** #
-#                                Makefile                                    #
+#                                Makefile                                   #
 # **************************************************************************** #
 
 # Compiler and flags
 CC      := gcc
 CFLAGS  := -Wall -Wextra -Werror
 
+# Library name
+NAME    = libft.a
+
 # Files and directories
-SRC     := ft_putchar_fd.c \
+SRC     := ft_isalpha.c \
+           ft_isdigit.c \
+           ft_isalnum.c \
+           ft_isascii.c \
+           ft_isprint.c \
+           ft_strlen.c \
+           ft_memset.c \
+           ft_bzero.c \
+           ft_memcpy.c \
+           ft_memmove.c \
+           ft_strlcpy.c \
+           ft_strlcat.c \
+           ft_toupper.c \
+           ft_tolower.c \
+           ft_strchr.c \
+           ft_strrchr.c \
+           ft_strncmp.c \
+           ft_memchr.c \
+           ft_memcmp.c \
+           ft_strnstr.c \
+           ft_atoi.c \
+           ft_calloc.c \
+           ft_strdup.c \
+           ft_substr.c \
+           ft_strjoin.c \
+           ft_strtrim.c \
+           ft_split.c \
+           ft_itoa.c \
+           ft_strmapi.c \
+           ft_striteri.c \
+           ft_putchar_fd.c \
+           ft_putstr_fd.c \
            ft_putendl_fd.c \
            ft_putnbr_fd.c \
-           ft_putstr_fd.c \
-           ft_strdup.c \
-           ft_strjoin.c \
-           ft_strlen.c \
-           ft_substr.c \
-           ft_strjoin_runner.c \
-           t_substr_runner.c
 
-OBJ     := $(SRC:.c=.o)
-NAME    := program
+BONUS   := ft_lstnew.c \
+           ft_lstadd_front.c \
+           ft_lstsize.c \
+           ft_lstlast.c \
+           ft_lstadd_back.c \
+           ft_lstdelone.c \
+           ft_lstclear.c \
+           ft_lstiter.c \
+           ft_lstmap.c \
+
+OBJ     := $(SRC:.c=.o) $(BONUS:.c=.o)
 HEADER  := libft.h
 
 # Default rule
 all: $(NAME)
 
-# Linking the final executable
+# Creating the static library
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	ar rcs $(NAME) $(OBJ)
 
 # Compiling object files
 %.o: %.c $(HEADER)
@@ -37,13 +73,16 @@ $(NAME): $(OBJ)
 clean:
 	rm -f $(OBJ)
 
-# Clean object files and the executable
+# Clean object files and the library
 fclean: clean
 	rm -f $(NAME)
 
 # Rebuild everything
 re: fclean all
 
-# Phony targets
-.PHONY: all clean fclean re
+# Bonus target
+bonus: $(OBJ) $(BONUS:.c=.o)
+	ar rcs $(NAME) $(OBJ) $(BONUS:.c=.o)
 
+# Phony targets
+.PHONY: all clean fclean re bonus
