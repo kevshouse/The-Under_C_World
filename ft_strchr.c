@@ -6,15 +6,14 @@
 /*   By: keanders <keanders@student.42london.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 16:27:52 by keanders          #+#    #+#             */
-/*   Updated: 2024/12/02 17:10:45 by keanders         ###   ########.fr       */
+/*   Updated: 2025/01/02 13:15:56 by keanders         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
 
 char	*ft_strchr(const char *s, int c)
 {
 	char	target;
-	
+
 	target = (char)c;
 	while (*s != '\0')
 	{
@@ -28,5 +27,5 @@ char	*ft_strchr(const char *s, int c)
 	{
 		return ((char *)s);
 	}
-	return (char *)0;
+	return ((char *)0);
 }

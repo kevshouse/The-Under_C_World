@@ -52,12 +52,12 @@ char	*ft_itoa(int n)
 	else if (n < 0)
 		ptr[0] = '-';
 	while (n)
-	{	
+	{
 		if (n < 0)
 			ptr[--len] = (~(n % 10) + 1) + 48;
 		else
 			ptr[--len] = (n % 10) + 48;
 		n /= 10;
-	}	
+	}
 	return (ptr);
 }

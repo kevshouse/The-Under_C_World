@@ -1,17 +1,24 @@
-# include "libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: keanders <keanders@student.42london.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/02 12:58:06 by keanders          #+#    #+#             */
+/*   Updated: 2025/01/02 13:09:26 by keanders         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void ft_striteri(char *s, void (*f)(unsigned int, char *))
+#include "libft.h"
+
+void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
 	int		i;
-	
+
 	i = 0;
-	/* Protect against NULL pointers */
 	if (s == NULL || f == NULL)
-	{
-		return; 
-	}
-       	/* Apply function 'f' to the data ar the & of s[i]*/
-    	/* != '\0' to protect any NULL Terminator encountered */
+		return ;
 	while (s[i] != '\0')
 	{
 		f(i, &s[i]);

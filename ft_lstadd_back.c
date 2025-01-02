@@ -1,22 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: keanders <keanders@student.42london.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/02 12:21:57 by keanders          #+#    #+#             */
+/*   Updated: 2025/01/02 12:22:48 by keanders         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-void ft_lstadd_back(t_list **lst, t_list *new)
-{	
+//this is a valid comment line 5 means abc
+void	ft_lstadd_back(t_list **lst, t_list *new)
+{
 	t_list	*existing;
-	
-	if (!new)// Do nothing on NULL nodes
-		return;
-	if (*lst ==NULL)
-		// On empty set new head node as head
+
+	if (!new)
+		return ;
+	if (*lst == NULL)
 		*lst = new;
 	else
-	{// Start at head node
+	{
 		existing = *lst;
 		while (existing->next)
 		{
-			existing = existing->next; // List traversal
+			existing = existing->next;
 		}
-		// link new node to last existing node.
 		existing->next = new;
 	}
 }

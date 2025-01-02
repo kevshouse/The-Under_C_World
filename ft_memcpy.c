@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: keanders <keanders@student.42london.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/02 15:08:54 by keanders          #+#    #+#             */
+/*   Updated: 2025/01/02 15:29:27 by keanders         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /*ft_memcpy                                                     */
 /*								*/
 /*If (src && dst == NULL), 					*/
@@ -5,7 +17,7 @@
 /*Cast both dst and src temp pointers to unsigned '*'		*/
 /*Iterate dst tmp '*' --while(NOT reahed (n)			*/
 /*Set current byte of dst tmp '*' = curr byte of src tmp '*'	*/
-/*Return dst '*'				 		*/
+/*Return dst '*'							*/
 /*Collision check! I need to src is ovelapping with dst, is so, */
 /*I must copy in reverse (top down).                            */
 /*                                                              */
@@ -19,34 +31,14 @@
 /****************************************************************/
 #include "libft.h"
 
-void    *ft_memcpy(void *dst, const void *src, size_t n)
-/*				
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	unsigned char	*tmp_src;
-	unsigned char	*tmp_dst;
-	size_t		i;
-	
-	if (dst == NULL || src == NULL)
-		return (NULL); 
-	
-	tmp_src = (unsigned char *)src;
-	tmp_dst = (unsigned char *)dst;
-	
-	i = 0;
-	while (i < n)
-	{
-		tmp_dst[i] = tmp_src[i];
-		i++;	
-	}
-	return dst;
-}
-*/
-{
-	unsigned char *d = dst;
-	const unsigned char *s = src;
-	
+	const unsigned char	*s;
+	unsigned char		*d;
+
+	d = dst;
+	s = src;
 	if (!dst && !src)
-	/* NULL Pointer precaution */
 		return (NULL);
 	while (n--)
 	{

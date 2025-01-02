@@ -26,8 +26,9 @@
 
 static void	*safe_malloc(size_t size)
 {
-	void	*ptr = malloc(size);
+	void	*ptr;
 
+	ptr = malloc(size);
 	if (ptr == NULL)
 	{
 		return (NULL);
@@ -37,8 +38,8 @@ static void	*safe_malloc(size_t size)
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char	*buffer;
-	unsigned int		i;
+	unsigned int	i;
+	char			*buffer;
 
 	if (s == NULL || f == NULL)
 		return (NULL);

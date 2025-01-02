@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: keanders <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/02 11:49:54 by keanders          #+#    #+#             */
+/*   Updated: 2025/01/02 11:49:56 by keanders         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-static	int snip(const char *set, char c)
+static	int	snip(const char *set, char c)
 {
 	int		i;
-	
+
 	i = 0;
 	while (set[i])
 	{
@@ -16,9 +28,9 @@ static	int snip(const char *set, char c)
 
 static char	*scratch_buffer(const char *s1, size_t start, size_t len)
 {
-	char *str;
+	char	*str;
 	size_t	i;
-	
+
 	str = (char *)ft_calloc(len + 1, sizeof(char));
 	if (!str)
 		return (NULL);
@@ -36,21 +48,13 @@ char	*ft_strtrim(char const *s1, char const *set)
 {
 	int		i;
 	int		j;
-	
+
 	i = 0;
 	j = ft_strlen(s1) - 1;
 	if (j < 1)
-		return(ft_strdup(""));
-	/*
-	 locate preamble (leading char) of keep_string 
-	"s1[i]) && s1[i]"  Bounds checking.
-	*/
+		return (ft_strdup(""));
 	while (snip(set, s1[i]) && s1[i])
 		i++;
-	 /*
-	 locate postamble (tail char) of keep_string.
-	 again with bounds check.
-	 */
 	while (snip(set, s1[j]) && j > i)
 		j--;
 	return (scratch_buffer(s1, i, j - i + 1));

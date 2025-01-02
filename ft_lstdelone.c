@@ -1,23 +1,21 @@
-/******************************************************************************/
-/* Parameters:		lst: The node to free.				      */
-/* 	    		del: The addess of the function used to delete	      */
-/* 	    		the content.	     				      */
-/* Return value:	None. 			    			      */
-/* External functs:	free.						      */
-/* Description:		Returns the last node of the list.		      */
-/* 			    						      */
-/******************************************************************************/
-/* Note: Function doesn´t know how 'del' works, we just del(lst->content).    */
-/* Func doesn´t handle rewiring of the list, the caller must do that!         */
-/* 						                              */
-/******************************************************************************/
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: keanders <keanders@student.42london.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/02 12:24:18 by keanders          #+#    #+#             */
+/*   Updated: 2025/01/02 12:24:20 by keanders         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "libft.h"
 
 void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
 	if (!lst || !del)
-		return;
+		return ;
 	del(lst->content);
 	free(lst);
 }
