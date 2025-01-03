@@ -1,121 +1,94 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   new_ft_split.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: keanders <keanders@student.42london.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 13:16:44 by keanders          #+#    #+#             */
-/*   Updated: 2025/01/02 17:13:31 by keanders         ###   ########.fr       */
+/*   Created: 2025/01/03 11:08:46 by keanders          #+#    #+#             */
+/*   Updated: 2025/01/03 11:51:51 by keanders         ###   ########.fr       */
 /*                                                                            */
+/* ************************************************************************** */
+/*   fr_strdup()	for string duplication				      */
+/*   ft_calloc()	for memory allocation				      */
+/* ************************************************************************** */
+/*   Logical breakdown							      */
+/*   ft_split() needs to :-						      */
+/*   	Compute the wordcount  						      */
+/*   	Allocate memory for the a string array				      */
+/*   	Split the inpuy string into words based on the delimiters	      */
+/*   	Handle memory managment safely and effectively			      */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void		handle_memory_error(char **buffer, size_t i);
-static char		*get_next_token(const char **s, char c);
-
-static int	process_token(char **buffer, const char **s, char c, size_t *i)
+static int	word_count(const char *s, char c)
 {
-	buffer[*i] = get_next_token(s, c);
-	if (!buffer[*i])
-	{
-		handle_memory_error(buffer, *i);
-		return (0);
-	}
-	(*i)++;
-	return (1);
-}
-
-static void	handle_memory_error(char **buffer, size_t i)
-{
-	while (i > 0)
-		free(buffer[--i]);
-	free(buffer);
-}
-
-static void	*safe_malloc(size_t size)
-{
-	void	*ptr;
-
-	ptr = malloc(size);
-	if (ptr == NULL)
-	{
-		return (NULL);
-	}
-	return (ptr);
-}
-
-static char	*get_next_token(const char **s, char c)
-{
-	const char	*start = *s;
-	char		*token;
-	size_t		length;
-
-	length = 0;
-	while (**s && **s == c)
-	{
-		(*s)++;
-	}
-	start = *s;
-	while (**s && **s != c)
-	{
-		length++;
-		(*s)++;
-	}
-	token = safe_malloc(length + 1);
-	if (!token)
-		return (NULL);
-	ft_strlcpy(token, start, length + 1);
-	return (token);
-}
-
-static size_t	count_tokens(const char *s, char c)
-{
-	size_t	count;
-	int		inside_tok;
+	int	count;
+	int	in_word;
 
 	count = 0;
-	inside_tok = 0;
+	in_word = 0;
 	while (*s)
 	{
-		if (*s != c && !inside_tok)
+		if (*s != c && !in_word)
 		{
-			inside_tok = 1;
+			in_word = 1;
 			count++;
 		}
 		else if (*s == c)
 		{
-			inside_tok = 0;
+			in_word = 0;
 		}
 		s++;
 	}
 	return (count);
 }
 
+static char	*get_next_word(const char **s, char c)
+{
+	const char	*start_marker;
+	char		*word;
+	size_t		len;
+
+	len = 0;
+	start_marker = 0;
+	while (**s == c && **s)
+		(*s)++;
+	if (**s == '\0')
+		return (NULL);
+	start_marker = *s;
+	while (**s && **s != c)
+		(*s)++;
+	len = *s - start_marker;
+	if (len == 0)
+		return (NULL);
+	word = ft_substr(start_marker, 0, len);
+	return (word);
+}
+
 char	**ft_split(const char *s, char c)
 {
-	size_t token_count;
-	size_t i;
-	char **buffer;
+	char	**result;
+	int		numb_words;
+	int		i;
 
-	i = 0;
 	if (!s)
 		return (NULL);
-	token_count = count_tokens(s, c);
-	buffer = safe_malloc((token_count + 1) * sizeof(char *));
-	if (!buffer)
-		return (NULL);
-	while (*s)
+	numb_words = word_count(s, c);
+	result = (char **)ft_calloc(numb_words + 1, sizeof(char *));
+	i = 0;
+	while (i < numb_words)
 	{
-		if (*s != c)
+		result[i] = get_next_word(&s, c);
+		if (!result[i])
 		{
-			if (!process_token(buffer, &s, c, &i))
-				return (NULL);
+			while (i > 0)
+				free(result[--i]);
+			free(result);
+			return (NULL);
 		}
-		else
-			s++;
+		i++;
 	}
-	buffer[i] = NULL;
-	return (buffer);
+	return (result);
 }
